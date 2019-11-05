@@ -4,6 +4,11 @@ const main = () => {
   }
 }
 
+// Done Add a if statement to stop each team's score from going below 0.
+//  Done Add an if statement to stop each team's score from going above 21
+//  When a team gets 21 points, disable the buttons and display an message to the user of who won
+//  Add a reset button that resets the scoreboard back to the each team having 0 points and re-enables the buttons
+
 let score1 = 0
 let score2 = 0
 
@@ -22,23 +27,47 @@ const teamTwoUpdate = () => {
 }
 
 const teamOneAddOne = () => {
-  score1 = score1 + 1
-  document.querySelector('.team-1-score').textContent = score1
+  if (document.querySelector('.team-1-score').textContent <= 20) {
+    document.querySelector('.team-1-score').textContent =
+      parseInt(document.querySelector('.team-1-score').textContent) + 1
+  } else if (document.querySelector('.team-1-score').textContent === '21') {
+    document.querySelector('.team-1-score').textContent = 'Winner'
+    document.querySelector('button.team-1-add-1-button').disabled = true
+  }
 }
 
 const teamTwoAddOne = () => {
-  score2 = score2 + 1
-  document.querySelector('.team-2-score').textContent = score2
+  if (document.querySelector('.team-2-score').textContent <= 20) {
+    document.querySelector('.team-2-score').textContent =
+      parseInt(document.querySelector('.team-2-score').textContent) + 1
+  } else if (document.querySelector('.team-2-score').textContent === '21') {
+    document.querySelector('.team-2-score').textContent = 'Winner'
+    document.querySelector('button.team-2-add-1-button').disabled = true
+  }
 }
 
 const teamOneSubtractOne = () => {
-  score1 = score1 - 1
-  document.querySelector('.team-1-score').textContent = score1
+  if (document.querySelector('.team-1-score').textContent >= 1) {
+    document.querySelector('.team-1-score').textContent =
+      parseInt(document.querySelector('.team-1-score').textContent) - 1
+  }
 }
 
 const teamTwoSubtractOne = () => {
-  score2 = score2 - 1
-  document.querySelector('.team-2-score').textContent = score2
+  if (document.querySelector('.team-2-score').textContent >= 1) {
+    document.querySelector('.team-2-score').textContent =
+      parseInt(document.querySelector('.team-2-score').textContent) - 1
+  }
+}
+
+const resetGame = () => {
+  const theResetButton = 0
+  score1 = 0
+  score2 = 0
+  document.querySelector('button.team-1-add-1-button').disabled = false
+  document.querySelector('button.team-2-add-1-button').disabled = false
+  document.querySelector('.team-2-score').textContent = theResetButton
+  document.querySelector('.team-1-score').textContent = theResetButton
 }
 
 //EventListener update-team-1-name, update-team-2-name, team-1-add-1-button, team-2-add-1-button, team-1-subtract-1-button, team-2-subtract-1-button
@@ -66,6 +95,8 @@ document
 document
   .querySelector('.team-2-subtract-1-button')
   .addEventListener('click', teamTwoSubtractOne)
+
+document.querySelector('.reset').addEventListener('click', resetGame)
 
 document.addEventListener('click', function() {
   console.log('click')
